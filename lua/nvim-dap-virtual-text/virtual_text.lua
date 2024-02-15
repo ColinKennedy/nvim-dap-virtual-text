@@ -90,7 +90,10 @@ function M.set_virtual_text(stackframe, options, clear)
   local lang
   if vim.treesitter.get_parser and vim.treesitter.language and vim.treesitter.language.get_lang then
     lang = vim.treesitter.language.get_lang(vim.bo[buf].ft)
-    parser = vim.treesitter.get_parser(buf)
+
+    if lang ~= nil then
+      parser = vim.treesitter.get_parser(buf)
+    end
   else
     local require_ok, parsers = pcall(require, 'nvim-treesitter.parsers')
     if not require_ok then
